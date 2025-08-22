@@ -76,7 +76,7 @@ export default function HomePage() {
           {categories.map((cat) => (
             <Link
               key={cat.id}
-              href={`/category/${cat.id}`}
+              href={`/categories/${cat.id}`}
               className="relative group rounded-xl overflow-hidden shadow-lg"
             >
               <Image
