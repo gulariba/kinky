@@ -95,23 +95,6 @@ export default function ContactPage() {
         </motion.form>
       </div>
 
-      {/* Google Map Embed */}
-      <motion.div
-        initial={{ y: 50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.4 }}
-        className="relative max-w-6xl mx-auto mt-16 rounded-2xl overflow-hidden shadow-xl border border-gray-800"
-      >
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.843112197502!2d-74.00601518459341!3d40.7127759793308!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDQyJzQ2LjAiTiA3NMKwMDAnMjAuMCJX!5e0!3m2!1sen!2sus!4v1617663611111"
-          width="100%"
-          height="350"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-        ></iframe>
-      </motion.div>
-
       {/* Footer Tagline */}
       <div className="relative max-w-6xl mx-auto text-center mt-12 text-gray-400 text-sm">
         💬 We’re here for you — <span className="text-red-500">24/7 Support</span>
@@ -119,3 +102,4 @@ export default function ContactPage() {
     </main>
   );
 }
+
