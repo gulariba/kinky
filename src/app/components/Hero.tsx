@@ -21,7 +21,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-black/60" />
 
       {/* ✅ Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center min-h-screen pt-28 sm:pt-32">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center min-h-screen pt-16 sm:pt-20">
         <div className="max-w-3xl text-center sm:text-left">
           {/* ✅ Heading */}
           <motion.h1
