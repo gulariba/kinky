@@ -45,15 +45,25 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
   const [mobileOpen, setMobileOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     setMobileOpen(false);
     setShopOpen(false);
   }, [pathname]);
 
+  // Scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const activeClass = useMemo(
     () =>
-      "relative text-zinc-200 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:scale-x-0 after:bg-red-500 after:transition-transform hover:after:scale-x-100",
+      "relative text-zinc-200 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:scale-x-0 after:bg-red-500 after:transition-transform after:duration-300 hover:after:scale-x-100",
     []
   );
 
@@ -65,27 +75,39 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-black/90 backdrop-blur-md text-white">
+    <motion.header
+      initial={{ y: -50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={cn(
+        "sticky top-0 z-50 w-full backdrop-blur-md text-white transition-all duration-300",
+        scrolled
+          ? "bg-black/95 border-b border-zinc-800 shadow-lg"
+          : "bg-black/70 border-b border-transparent"
+      )}
+    >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:py-4">
         {/* Left: Logo + Mobile menu toggle */}
         <div className="flex items-center gap-3">
           <button
-            className="inline-flex items-center justify-center rounded-xl p-2 md:hidden hover:bg-zinc-900"
+            className="inline-flex items-center justify-center rounded-xl p-2 md:hidden hover:bg-zinc-900 transition"
             aria-label="Toggle menu"
             onClick={() => setMobileOpen((v) => !v)}
           >
             {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
 
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2 group">
             <Image
               src="/images/logo.png"
               alt="Noir Desire Logo"
               width={72}
               height={72}
-              className="h-16 w-16 md:h-20 md:w-20"
+              className="h-16 w-16 md:h-20 md:w-20 transition-transform duration-300 group-hover:scale-105"
             />
-            <span className="text-2xl md:text-4xl font-bold tracking-wide">Noir Desire</span>
+            <span className="text-2xl md:text-4xl font-bold tracking-wide group-hover:text-red-500 transition-colors">
+              Noir Desire
+            </span>
           </Link>
         </div>
 
@@ -99,7 +121,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
           >
             <button
               className={cn(
-                "inline-flex items-center gap-1 rounded-xl px-3 py-2 text-sm font-medium hover:bg-zinc-900",
+                "inline-flex items-center gap-1 rounded-xl px-3 py-2 text-sm font-medium hover:bg-zinc-900 transition",
                 activeClass
               )}
             >
@@ -112,7 +134,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
-                  transition={{ duration: 0.15 }}
+                  transition={{ duration: 0.2 }}
                   className="absolute left-0 mt-2 w-[520px] rounded-2xl border border-zinc-800 bg-black shadow-2xl"
                 >
                   <div className="grid grid-cols-2 gap-2 p-2">
@@ -120,7 +142,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
                       <Link
                         key={c.slug}
                         href={`/categories/${c.slug}`}
-                        className="group/item flex items-start gap-3 rounded-xl p-4 hover:bg-zinc-900"
+                        className="group/item flex items-start gap-3 rounded-xl p-4 hover:bg-zinc-900 transition"
                       >
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800">
                           <div className="h-2 w-2 rounded-full bg-red-600" />
@@ -160,7 +182,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
               key={item.href}
               href={item.href}
               className={cn(
-                "rounded-xl px-3 py-2 text-sm font-medium hover:bg-zinc-900",
+                "rounded-xl px-3 py-2 text-sm font-medium hover:bg-zinc-900 transition",
                 activeClass
               )}
             >
@@ -184,10 +206,10 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
             />
           </form>
 
-          <Link href="/account" className="rounded-xl p-2 text-zinc-200 hover:text-white hover:bg-zinc-900" aria-label="Account">
+          <Link href="/account" className="rounded-xl p-2 hover:bg-zinc-900 hover:text-red-500 transition" aria-label="Account">
             <User className="h-5 w-5" />
           </Link>
-          <Link href="/wishlist" className="relative rounded-xl p-2 text-zinc-200 hover:text-white hover:bg-zinc-900" aria-label="Wishlist">
+          <Link href="/wishlist" className="relative rounded-xl p-2 hover:bg-zinc-900 hover:text-red-500 transition" aria-label="Wishlist">
             <Heart className="h-5 w-5" />
             {wishlistCount > 0 && (
               <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold">
@@ -195,7 +217,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
               </span>
             )}
           </Link>
-          <Link href="/cart" className="relative rounded-xl p-2 text-zinc-200 hover:text-white hover:bg-zinc-900" aria-label="Cart">
+          <Link href="/cart" className="relative rounded-xl p-2 hover:bg-zinc-900 hover:text-red-500 transition" aria-label="Cart">
             <ShoppingCart className="h-5 w-5" />
             {cartCount > 0 && (
               <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold">
@@ -213,6 +235,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
             className="border-t border-zinc-800 bg-black md:hidden"
           >
             {/* Mobile search */}
@@ -251,7 +274,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="block rounded-xl px-3 py-3 font-medium hover:bg-zinc-900"
+                  className="block rounded-xl px-3 py-3 font-medium hover:bg-zinc-900 transition"
                 >
                   {item.name}
                 </Link>
@@ -259,11 +282,11 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
 
               {/* Quick actions */}
               <div className="mt-2 grid grid-cols-3 gap-2 px-2">
-                <Link href="/account" className="rounded-xl border border-zinc-800 p-3 text-center hover:bg-zinc-900">
+                <Link href="/account" className="rounded-xl border border-zinc-800 p-3 text-center hover:bg-zinc-900 transition">
                   <User className="mx-auto h-5 w-5" />
                   <span className="mt-1 block text-xs">Account</span>
                 </Link>
-                <Link href="/wishlist" className="relative rounded-xl border border-zinc-800 p-3 text-center hover:bg-zinc-900">
+                <Link href="/wishlist" className="relative rounded-xl border border-zinc-800 p-3 text-center hover:bg-zinc-900 transition">
                   <Heart className="mx-auto h-5 w-5" />
                   {wishlistCount > 0 && (
                     <span className="absolute right-2 top-2 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold">
@@ -272,7 +295,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
                   )}
                   <span className="mt-1 block text-xs">Wishlist</span>
                 </Link>
-                <Link href="/cart" className="relative rounded-xl border border-zinc-800 p-3 text-center hover:bg-zinc-900">
+                <Link href="/cart" className="relative rounded-xl border border-zinc-800 p-3 text-center hover:bg-zinc-900 transition">
                   <ShoppingCart className="mx-auto h-5 w-5" />
                   {cartCount > 0 && (
                     <span className="absolute right-2 top-2 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold">
@@ -286,6 +309,6 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
           </motion.nav>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 }
