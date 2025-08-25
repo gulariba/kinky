@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import Hero from "./components/hero";
 import { motion } from "framer-motion";
 import { Instagram, Twitter, Facebook, Mail, Phone, Youtube } from "lucide-react";
 
@@ -38,26 +39,8 @@ export default function HomePage() {
     <main className="bg-black text-white min-h-screen font-sans">
      
       {/* ✅ Hero Section */}
-      <section className="relative h-[70vh] md:h-[90vh] flex items-center justify-center">
-        <Image src="/images/bg.jpg" alt="Hero Banner" fill priority className="object-cover object-center" />
-        <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center px-6">
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="text-4xl md:text-7xl font-bold mb-6 tracking-wide"
-          >
-            Unleash Your Desires
-          </motion.h1>
-          <Link
-            href="/shop"
-            className="bg-red-600 px-8 py-3 rounded-full text-lg font-semibold hover:bg-red-700 transition"
-          >
-            Shop Now
-          </Link>
-        </div>
-      </section>
-
+      <Hero />
+         
       {/* ✅ Sale Banner (Clickable) */}
       <Link href="/shop" className="block relative w-full h-[250px] md:h-[320px] mt-12 px-4">
         <Image src="/images/sale.jpg" alt="Sale Banner" fill className="object-cover object-center rounded-xl" />
