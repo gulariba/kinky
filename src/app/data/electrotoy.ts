@@ -1,4 +1,4 @@
-cexport const electroProducts = [
+export const electroProducts = [
   {
     id: 1,
     name: "Electro Stimulation Kit",
@@ -21,4 +21,5 @@ cexport const electroProducts = [
     img: "/images/electro3.jpg",
   },
 ];
+
 
