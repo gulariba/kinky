@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import Hero from "./components/hero";
-import { motion } from "framer-motion";
 import { Instagram, Twitter, Facebook, Mail, Phone, Youtube } from "lucide-react";
 
 // ✅ Dummy Data
@@ -37,27 +36,34 @@ const testimonials = [
 export default function HomePage() {
   return (
     <main className="bg-black text-white min-h-screen font-sans">
-     
       {/* ✅ Hero Section */}
       <Hero />
-         
-      {/* ✅ Sale Banner (Clickable) */}
+
+      {/* ✅ Sale Banner */}
       <Link href="/shop" className="block relative w-full h-[250px] md:h-[320px] mt-12 px-4">
-        <Image src="/images/sale.jpg" alt="Sale Banner" fill className="object-cover object-center rounded-xl" />
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-xl">
-          <h2 className="text-3xl md:text-5xl font-bold">🔥 50% Off – Limited Time 🔥</h2>
+        <Image
+          src="/images/sale.jpg"
+          alt="Sale Banner"
+          fill
+          priority
+          className="object-cover object-center rounded-xl"
+        />
+        <div className="absolute inset-0 bg-black/60 flex items-center justify-center rounded-xl">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-red-400 drop-shadow-lg">
+            🔥 50% Off – Limited Time 🔥
+          </h2>
         </div>
       </Link>
 
       {/* ✅ Categories */}
-      <section className="max-w-7xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold mb-10 text-center">Shop by Category</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <section className="max-w-7xl mx-auto px-6 py-20">
+        <h2 className="text-4xl font-bold mb-12 text-center">Shop by Category</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {categories.map((cat) => (
             <Link
               key={cat.id}
               href={`/categories/${cat.id}`}
-              className="relative group rounded-xl overflow-hidden shadow-lg"
+              className="relative group rounded-2xl overflow-hidden shadow-lg hover:shadow-red-600/40 transition"
             >
               <Image
                 src={cat.img}
@@ -75,17 +81,17 @@ export default function HomePage() {
       </section>
 
       {/* ✅ New Arrivals */}
-      <section className="max-w-7xl mx-auto px-6 py-16 bg-gradient-to-b from-black via-zinc-900 to-black rounded-2xl shadow-xl">
-        <h2 className="text-3xl font-bold mb-10 text-center">New Arrivals</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <section className="max-w-7xl mx-auto px-6 py-20 bg-gradient-to-b from-black via-zinc-900 to-black rounded-3xl shadow-xl">
+        <h2 className="text-4xl font-bold mb-12 text-center">New Arrivals</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {newArrivals.map((p) => (
             <Link
               key={p.id}
               href={`/products/${p.id}`}
-              className="bg-zinc-900 p-4 rounded-lg shadow-lg hover:shadow-red-600/40 transition"
+              className="bg-zinc-900 p-6 rounded-xl shadow-lg hover:shadow-red-600/40 transition"
             >
-              <div className="relative w-full h-40 mb-4">
-                <Image src={p.img} alt={p.name} fill className="object-cover rounded-md" />
+              <div className="relative w-full h-48 mb-4">
+                <Image src={p.img} alt={p.name} fill className="object-cover rounded-lg" />
               </div>
               <h3 className="text-lg font-semibold">{p.name}</h3>
               <p className="text-red-400 font-bold">${p.price.toFixed(2)}</p>
@@ -95,17 +101,17 @@ export default function HomePage() {
       </section>
 
       {/* ✅ Best Sellers */}
-      <section className="max-w-7xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold mb-10 text-center">Best Sellers</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <section className="max-w-7xl mx-auto px-6 py-20">
+        <h2 className="text-4xl font-bold mb-12 text-center">Best Sellers</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {bestSellers.map((p) => (
             <Link
               key={p.id}
               href={`/products/${p.id}`}
-              className="bg-zinc-900 p-4 rounded-lg shadow-lg hover:shadow-red-600/40 transition"
+              className="bg-zinc-900 p-6 rounded-xl shadow-lg hover:shadow-red-600/40 transition"
             >
-              <div className="relative w-full h-40 mb-4">
-                <Image src={p.img} alt={p.name} fill className="object-cover rounded-md" />
+              <div className="relative w-full h-48 mb-4">
+                <Image src={p.img} alt={p.name} fill className="object-cover rounded-lg" />
               </div>
               <h3 className="text-lg font-semibold">{p.name}</h3>
               <p className="text-red-400 font-bold">${p.price.toFixed(2)}</p>
@@ -115,12 +121,15 @@ export default function HomePage() {
       </section>
 
       {/* ✅ Testimonials */}
-      <section className="bg-zinc-900 py-16 px-6">
-        <h2 className="text-3xl font-bold text-center mb-12">What Our Clients Say</h2>
-        <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
+      <section className="bg-zinc-900 py-20 px-6">
+        <h2 className="text-4xl font-bold text-center mb-14">What Our Clients Say</h2>
+        <div className="grid gap-10 md:grid-cols-3 max-w-6xl mx-auto">
           {testimonials.map((t) => (
-            <div key={t.id} className="bg-black p-6 rounded-xl shadow-lg">
-              <p className="italic text-zinc-300 mb-4">“{t.text}”</p>
+            <div
+              key={t.id}
+              className="bg-black p-8 rounded-2xl shadow-lg hover:shadow-red-600/30 transition"
+            >
+              <p className="italic text-zinc-300 mb-6">“{t.text}”</p>
               <h4 className="font-semibold text-red-400">— {t.name}</h4>
             </div>
           ))}
@@ -128,12 +137,12 @@ export default function HomePage() {
       </section>
 
       {/* ✅ Footer */}
-      <footer className="bg-gradient-to-b from-black via-zinc-950 to-black border-t border-zinc-800 pt-16 px-6">
-        <div className="max-w-7xl mx-auto grid gap-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 text-zinc-400">
+      <footer className="bg-gradient-to-b from-black via-zinc-950 to-black border-t border-zinc-800 pt-20 px-6">
+        <div className="max-w-7xl mx-auto grid gap-12 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 text-zinc-400">
           <div>
             <h3 className="text-2xl font-extrabold text-white mb-4">Noir Desire</h3>
             <p className="mb-6">Luxury & elegance in kink fashion. Designed for bold souls.</p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-5">
               <Link href="#"><Instagram className="w-6 h-6 hover:text-red-500 transition" /></Link>
               <Link href="#"><Twitter className="w-6 h-6 hover:text-red-500 transition" /></Link>
               <Link href="#"><Facebook className="w-6 h-6 hover:text-red-500 transition" /></Link>
@@ -158,12 +167,18 @@ export default function HomePage() {
             <h4 className="text-lg font-semibold text-white mb-3">Stay Updated</h4>
             <p className="mb-3">Sign up for exclusive offers & news.</p>
             <div className="flex gap-2">
-              <input type="email" placeholder="Your Email" className="px-3 py-2 rounded-full text-black flex-1" />
-              <button className="bg-red-600 px-4 py-2 rounded-full hover:bg-red-700 transition">Join</button>
+              <input
+                type="email"
+                placeholder="Your Email"
+                className="px-4 py-2 rounded-full text-black flex-1"
+              />
+              <button className="bg-red-600 px-5 py-2 rounded-full hover:bg-red-700 transition">
+                Join
+              </button>
             </div>
           </div>
         </div>
-        <div className="border-t border-zinc-800 mt-12 py-6 text-center text-sm text-zinc-500">
+        <div className="border-t border-zinc-800 mt-14 py-6 text-center text-sm text-zinc-500">
           <p>© 2025 Noir Desire. All rights reserved.</p>
           <p className="mt-2">
             <Link href="/terms" className="hover:text-white">Terms</Link> ·{" "}
