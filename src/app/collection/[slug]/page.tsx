@@ -1,68 +1,68 @@
 "use client";
 
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useParams } from "next/navigation";
 
-// ✅ Import your products
 import { bdsmProducts } from "../../data/bdsm";
 import { bondageProducts } from "../../data/bondage";
 import { sexToysProducts } from "../../data/sex-toys";
 import { electroProducts } from "../../data/electro";
 
-// ✅ Define Product type
-interface Product {
+type Product = {
   id: number;
   name: string;
-  price: number;
+  price: string;
+  category: string;
+  slug: string;
   img: string;
-  collection: string;
-}
+};
+
+// ✅ Map slug to category products
+const categoryMap: Record<string, Product[]> = {
+  bdsm: bdsmProducts,
+  bondage: bondageProducts,
+  "sex-toys": sexToysProducts,
+  electro: electroProducts,
+};
 
 export default function CollectionPage() {
   const { slug } = useParams();
   const [sort, setSort] = useState("latest");
   const [page, setPage] = useState(1);
 
-  // Convert slug to string (if array)
-  const slugStr = Array.isArray(slug) ? slug[0] : slug || "";
+  const slugStr = slug ? String(slug) : "";
+  const categorySlug = slugStr.toLowerCase().trim();
 
-  // Combine all products
-  const allProducts: Product[] = [
-    ...bdsmProducts,
-    ...bondageProducts,
-    ...sexToysProducts,
-    ...electroProducts,
-  ];
+  // ✅ Get products for this category
+  const filteredProducts: Product[] = categoryMap[categorySlug] || [];
 
-  // Filter products by collection (slug)
-  const filteredProducts = allProducts
-    .filter((p) => p.collection.toLowerCase() === slugStr.toLowerCase())
-    .sort((a, b) =>
-      sort === "priceLowHigh"
-        ? a.price - b.price
-        : sort === "priceHighLow"
-        ? b.price - a.price
-        : b.id - a.id
-    );
+  // ✅ Sort products
+  const sortedProducts = filteredProducts.sort((a, b) =>
+    sort === "priceLowHigh"
+      ? parseFloat(a.price) - parseFloat(b.price)
+      : sort === "priceHighLow"
+      ? parseFloat(b.price) - parseFloat(a.price)
+      : b.id - a.id
+  );
 
-  // Pagination
+  // ✅ Pagination
   const itemsPerPage = 8;
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  const paginated = filteredProducts.slice(
+  const paginated = sortedProducts.slice(
     (page - 1) * itemsPerPage,
     page * itemsPerPage
   );
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
 
   return (
     <main className="bg-black text-white px-6 py-12 min-h-screen">
       <div className="max-w-7xl mx-auto">
-        {/* Header and Sort */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <h1 className="text-4xl font-bold capitalize">
             {slugStr.replace(/-/g, " ")} Collection
           </h1>
+
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value)}
@@ -74,7 +74,6 @@ export default function CollectionPage() {
           </select>
         </div>
 
-        {/* Products Grid */}
         {paginated.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {paginated.map((product) => (
@@ -90,6 +89,7 @@ export default function CollectionPage() {
                   height={192}
                   className="w-full object-cover group-hover:scale-105 transition-transform duration-300"
                   style={{ height: "192px" }}
+                  priority={false}
                 />
                 <div className="p-4">
                   <h3 className="text-lg font-semibold">{product.name}</h3>
@@ -104,7 +104,6 @@ export default function CollectionPage() {
           </p>
         )}
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="flex justify-center mt-8 gap-2">
             {Array.from({ length: totalPages }, (_, i) => (
