@@ -54,16 +54,14 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
 
   // Scroll effect
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const activeClass = useMemo(
     () =>
-      "relative text-zinc-200 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:scale-x-0 after:bg-red-500 after:transition-transform after:duration-300 hover:after:scale-x-100",
+      "relative text-zinc-200 hover:text-white after:absolute after:left-0 after:-bottom-0.5 after:h-[2px] after:w-full after:scale-x-0 after:bg-red-500 after:transition-transform hover:after:scale-x-100",
     []
   );
 
@@ -76,43 +74,39 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
 
   return (
     <motion.header
-      initial={{ y: -50, opacity: 0 }}
+      initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.5 }}
       className={cn(
-        "sticky top-0 z-50 w-full backdrop-blur-md text-white transition-all duration-300",
-        scrolled
-          ? "bg-black/95 border-b border-zinc-800 shadow-lg"
-          : "bg-black/70 border-b border-transparent"
+        "sticky top-0 z-50 w-full text-white transition-all duration-300",
+        scrolled ? "bg-black/95 border-b border-zinc-800" : "bg-black/90 border-b border-transparent"
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:py-4">
-        {/* Left: Logo + Mobile menu toggle */}
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2">
+        {/* Left: Logo + Mobile toggle */}
         <div className="flex items-center gap-3">
           <button
-            className="inline-flex items-center justify-center rounded-xl p-2 md:hidden hover:bg-zinc-900 transition"
-            aria-label="Toggle menu"
+            className="inline-flex items-center justify-center rounded-lg p-1.5 md:hidden hover:bg-zinc-900 transition"
             onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Toggle menu"
           >
-            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
 
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-2">
             <Image
               src="/images/logo.png"
-              alt="Noir Desire Logo"
-              width={72}
-              height={72}
-              className="h-16 w-16 md:h-20 md:w-20 transition-transform duration-300 group-hover:scale-105"
+              alt="Logo"
+              width={40}
+              height={40}
+              className="h-10 w-10"
             />
-            <span className="text-2xl md:text-4xl font-bold tracking-wide group-hover:text-red-500 transition-colors">
-              Noir Desire
-            </span>
+            <span className="text-xl font-bold tracking-wide">Noir Desire</span>
           </Link>
         </div>
 
         {/* Center: Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-4">
           {/* Shop Dropdown */}
           <div
             className="group relative"
@@ -121,7 +115,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
           >
             <button
               className={cn(
-                "inline-flex items-center gap-1 rounded-xl px-3 py-2 text-sm font-medium hover:bg-zinc-900 transition",
+                "inline-flex items-center gap-1 rounded-lg px-2 py-1 text-sm font-medium hover:bg-zinc-900 transition",
                 activeClass
               )}
             >
@@ -131,46 +125,29 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
             <AnimatePresence>
               {shopOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: 8 }}
+                  initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 8 }}
+                  exit={{ opacity: 0, y: 6 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute left-0 mt-2 w-[520px] rounded-2xl border border-zinc-800 bg-black shadow-2xl"
+                  className="absolute left-0 mt-2 w-[480px] rounded-xl border border-zinc-800 bg-black shadow-2xl"
                 >
-                  <div className="grid grid-cols-2 gap-2 p-2">
+                  <div className="grid grid-cols-2 gap-1 p-2">
                     {shopCategories.map((c) => (
                       <Link
                         key={c.slug}
                         href={`/categories/${c.slug}`}
-                        className="group/item flex items-start gap-3 rounded-xl p-4 hover:bg-zinc-900 transition"
+                        className="flex items-start gap-3 rounded-lg p-3 hover:bg-zinc-900 transition"
                       >
-                        <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800">
+                        <div className="flex h-8 w-8 items-center justify-center rounded border border-zinc-800">
                           <div className="h-2 w-2 rounded-full bg-red-600" />
                         </div>
-                        <div className="flex flex-col">
-                          <span className="text-sm font-semibold">{c.name}</span>
-                          {c.description && (
-                            <span className="text-xs text-zinc-400">{c.description}</span>
-                          )}
+                        <div>
+                          <span className="text-sm font-medium">{c.name}</span>
+                          <p className="text-xs text-zinc-400">{c.description}</p>
                         </div>
-                        <ChevronRight className="ml-auto h-4 w-4 opacity-0 transition-opacity group-hover/item:opacity-100" />
+                        <ChevronRight className="ml-auto h-4 w-4 opacity-0 group-hover:opacity-100 transition" />
                       </Link>
                     ))}
-                  </div>
-
-                  <div className="border-t border-zinc-800 p-3 text-xs text-zinc-400">
-                    Trending:{" "}
-                    <Link className="text-red-400 hover:underline" href="/shop/bdsm">
-                      Leather cuffs
-                    </Link>
-                    ,{" "}
-                    <Link className="text-red-400 hover:underline" href="/shop/sex-toys">
-                      Wand massager
-                    </Link>
-                    ,{" "}
-                    <Link className="text-red-400 hover:underline" href="/shop/electro">
-                      E-stim kit
-                    </Link>
                   </div>
                 </motion.div>
               )}
@@ -182,7 +159,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
               key={item.href}
               href={item.href}
               className={cn(
-                "rounded-xl px-3 py-2 text-sm font-medium hover:bg-zinc-900 transition",
+                "rounded-lg px-2 py-1 text-sm font-medium hover:bg-zinc-900 transition",
                 activeClass
               )}
             >
@@ -191,36 +168,36 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
           ))}
         </nav>
 
-        {/* Right: Icons + Search */}
-        <div className="flex min-w-0 items-center gap-2 md:gap-3">
+        {/* Right: Icons */}
+        <div className="flex items-center gap-2">
           <form
             onSubmit={submitSearch}
-            className="hidden min-w-[220px] flex-1 items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950 px-3 py-2 md:flex"
+            className="hidden md:flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950 px-2 py-1"
           >
-            <Search className="h-4 w-4 shrink-0 text-zinc-400" />
+            <Search className="h-4 w-4 text-zinc-400" />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search products…"
-              className="w-full bg-transparent text-sm outline-none placeholder:text-zinc-500"
+              placeholder="Search…"
+              className="w-32 bg-transparent text-sm outline-none placeholder:text-zinc-500"
             />
           </form>
 
-          <Link href="/account" className="rounded-xl p-2 hover:bg-zinc-900 hover:text-red-500 transition" aria-label="Account">
+          <Link href="/account" className="rounded-lg p-1.5 hover:bg-zinc-900 hover:text-red-500">
             <User className="h-5 w-5" />
           </Link>
-          <Link href="/wishlist" className="relative rounded-xl p-2 hover:bg-zinc-900 hover:text-red-500 transition" aria-label="Wishlist">
+          <Link href="/wishlist" className="relative rounded-lg p-1.5 hover:bg-zinc-900 hover:text-red-500">
             <Heart className="h-5 w-5" />
             {wishlistCount > 0 && (
-              <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold">
+              <span className="absolute -right-1 -top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold">
                 {wishlistCount}
               </span>
             )}
           </Link>
-          <Link href="/cart" className="relative rounded-xl p-2 hover:bg-zinc-900 hover:text-red-500 transition" aria-label="Cart">
+          <Link href="/cart" className="relative rounded-lg p-1.5 hover:bg-zinc-900 hover:text-red-500">
             <ShoppingCart className="h-5 w-5" />
             {cartCount > 0 && (
-              <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold">
+              <span className="absolute -right-1 -top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold">
                 {cartCount}
               </span>
             )}
@@ -228,83 +205,43 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
         </div>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.nav
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
             className="border-t border-zinc-800 bg-black md:hidden"
           >
-            {/* Mobile search */}
-            <form onSubmit={submitSearch} className="mx-4 mt-4 flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2">
-              <Search className="h-5 w-5 text-zinc-400" />
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search products…"
-                className="w-full bg-transparent text-sm outline-none placeholder:text-zinc-500"
-              />
-            </form>
-
-            <div className="px-2 py-2">
-              {/* Collapsible Shop */}
+            <div className="p-3 space-y-2">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="block rounded-lg px-3 py-2 hover:bg-zinc-900"
+                >
+                  {item.name}
+                </Link>
+              ))}
               <details className="group">
-                <summary className="flex cursor-pointer list-none items-center justify-between rounded-xl px-3 py-3 font-medium hover:bg-zinc-900">
-                  <span>Shop</span>
-                  <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
+                <summary className="flex cursor-pointer items-center justify-between rounded-lg px-3 py-2 hover:bg-zinc-900">
+                  Shop <ChevronDown className="h-4 w-4 transition group-open:rotate-180" />
                 </summary>
-                <div className="mt-1 space-y-1 rounded-xl bg-zinc-950 p-2">
+                <div className="mt-1 space-y-1 rounded-lg bg-zinc-950 p-2">
                   {shopCategories.map((c) => (
                     <Link
                       key={c.slug}
                       href={`/categories/${c.slug}`}
-                      className="flex items-center justify-between rounded-lg px-3 py-2 text-sm hover:bg-zinc-900"
+                      className="flex items-center justify-between rounded px-3 py-2 text-sm hover:bg-zinc-900"
                     >
-                      <span>{c.name}</span>
+                      {c.name}
                       <ChevronRight className="h-4 w-4" />
                     </Link>
                   ))}
                 </div>
               </details>
-
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="block rounded-xl px-3 py-3 font-medium hover:bg-zinc-900 transition"
-                >
-                  {item.name}
-                </Link>
-              ))}
-
-              {/* Quick actions */}
-              <div className="mt-2 grid grid-cols-3 gap-2 px-2">
-                <Link href="/account" className="rounded-xl border border-zinc-800 p-3 text-center hover:bg-zinc-900 transition">
-                  <User className="mx-auto h-5 w-5" />
-                  <span className="mt-1 block text-xs">Account</span>
-                </Link>
-                <Link href="/wishlist" className="relative rounded-xl border border-zinc-800 p-3 text-center hover:bg-zinc-900 transition">
-                  <Heart className="mx-auto h-5 w-5" />
-                  {wishlistCount > 0 && (
-                    <span className="absolute right-2 top-2 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold">
-                      {wishlistCount}
-                    </span>
-                  )}
-                  <span className="mt-1 block text-xs">Wishlist</span>
-                </Link>
-                <Link href="/cart" className="relative rounded-xl border border-zinc-800 p-3 text-center hover:bg-zinc-900 transition">
-                  <ShoppingCart className="mx-auto h-5 w-5" />
-                  {cartCount > 0 && (
-                    <span className="absolute right-2 top-2 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold">
-                      {cartCount}
-                    </span>
-                  )}
-                  <span className="mt-1 block text-xs">Cart</span>
-                </Link>
-              </div>
             </div>
           </motion.nav>
         )}
