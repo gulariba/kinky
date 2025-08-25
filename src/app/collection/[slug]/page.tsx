@@ -5,12 +5,11 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-// Replace all @/data imports with relative paths
-import { bdsmProducts } from "../../../data/bdsm";
-import { bondageProducts } from "../../../data/bondage";
-import { sexToysProducts } from "../../../data/sex-toys";
-import { electroProducts } from "../../../data/electro";
-
+// ✅ Relative imports of product data
+import bdsmProducts from "../../../data/bdsm";
+import bondageProducts from "../../../data/bondage";
+import sexToysProducts from "../../../data/sex-toys";
+import electroProducts from "../../../data/electro";
 
 // ✅ Combine all products into one array
 const allProducts = [
@@ -28,14 +27,14 @@ export default function CollectionPage() {
   const slugStr = slug ? String(slug) : "";
   const categorySlug = slugStr.toLowerCase().trim();
 
-  // ✅ Filter products by slug
+  // ✅ Filter products by category slug
   const filteredProducts = allProducts
-    .filter((p) => p.slug === categorySlug)
+    .filter((p) => p.category === categorySlug)
     .sort((a, b) =>
       sort === "priceLowHigh"
-        ? parseFloat(a.price) - parseFloat(b.price)
+        ? a.price - b.price
         : sort === "priceHighLow"
-        ? parseFloat(b.price) - parseFloat(a.price)
+        ? b.price - a.price
         : b.id - a.id
     );
 
@@ -120,4 +119,3 @@ export default function CollectionPage() {
     </main>
   );
 }
-
