@@ -41,8 +41,7 @@ export default function HeroSection() {
             className="mt-4 text-base sm:text-lg md:text-xl text-gray-200 drop-shadow-md"
           >
             Explore seductive lingerie, luxury bondage gear, and toys crafted to
-            perfection. Experience passion like never before — discreetly
-            delivered to your doorstep.
+            perfection.
           </motion.p>
 
           {/* ✅ Badges */}
@@ -118,3 +117,4 @@ export default function HeroSection() {
     </section>
   );
 }
+
