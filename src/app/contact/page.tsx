@@ -5,21 +5,25 @@ import { Mail, Phone, MapPin, Instagram, Facebook, Twitter } from "lucide-react"
 
 export default function ContactPage() {
   return (
-    <main className="bg-black text-white px-6 py-20">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-start">
+    <main className="relative bg-black text-white px-6 py-20 overflow-hidden">
+      {/* Background Gradient + Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-red-900/20 via-black to-black opacity-90"></div>
+      <div className="absolute inset-0 bg-[url('/images/noise-texture.png')] opacity-10"></div>
+
+      <div className="relative max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-start">
         {/* Left Side - Contact Info */}
         <motion.div
           initial={{ x: -50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="space-y-8"
+          className="space-y-10"
         >
-          <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent">
-            Get in Touch
+          <h1 className="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-red-600 via-red-400 to-red-600 bg-clip-text text-transparent drop-shadow-lg">
+            Let’s Connect
           </h1>
-          <p className="text-lg text-gray-300">
-            Have questions or want to collaborate with us?  
-            We’d love to hear from you!
+          <p className="text-lg text-gray-300 leading-relaxed">
+            Have questions, ideas, or collaboration requests?  
+            We’re always ready to talk. Your journey with us starts here.
           </p>
 
           <div className="space-y-6">
@@ -38,14 +42,14 @@ export default function ContactPage() {
           </div>
 
           {/* Socials */}
-          <div className="flex gap-6 mt-6">
-            <a href="#" className="hover:text-red-500 transition">
+          <div className="flex gap-6 mt-8">
+            <a href="#" className="hover:text-red-500 transition transform hover:scale-110">
               <Instagram size={28} />
             </a>
-            <a href="#" className="hover:text-red-500 transition">
+            <a href="#" className="hover:text-red-500 transition transform hover:scale-110">
               <Facebook size={28} />
             </a>
-            <a href="#" className="hover:text-red-500 transition">
+            <a href="#" className="hover:text-red-500 transition transform hover:scale-110">
               <Twitter size={28} />
             </a>
           </div>
@@ -56,13 +60,13 @@ export default function ContactPage() {
           initial={{ x: 50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-gray-900 p-8 rounded-2xl shadow-2xl space-y-6"
+          className="backdrop-blur-xl bg-gray-900/70 p-8 rounded-2xl shadow-[0_0_25px_rgba(255,0,0,0.2)] border border-gray-800 space-y-6"
         >
           <div>
             <label className="block text-sm font-medium mb-2">Name</label>
             <input
               type="text"
-              className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg focus:outline-none focus:border-red-500"
+              className="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition"
               placeholder="Your name"
             />
           </div>
@@ -70,7 +74,7 @@ export default function ContactPage() {
             <label className="block text-sm font-medium mb-2">Email</label>
             <input
               type="email"
-              className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg focus:outline-none focus:border-red-500"
+              className="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition"
               placeholder="Your email"
             />
           </div>
@@ -78,17 +82,39 @@ export default function ContactPage() {
             <label className="block text-sm font-medium mb-2">Message</label>
             <textarea
               rows={5}
-              className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg focus:outline-none focus:border-red-500"
+              className="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition"
               placeholder="Your message"
             ></textarea>
           </div>
           <button
             type="submit"
-            className="w-full px-6 py-3 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 rounded-lg font-semibold transition shadow-lg"
+            className="w-full px-6 py-3 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 rounded-lg font-semibold transition transform hover:scale-[1.02] shadow-lg"
           >
             Send Message
           </button>
         </motion.form>
+      </div>
+
+      {/* Google Map Embed */}
+      <motion.div
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+        className="relative max-w-6xl mx-auto mt-16 rounded-2xl overflow-hidden shadow-xl border border-gray-800"
+      >
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.843112197502!2d-74.00601518459341!3d40.7127759793308!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDQyJzQ2LjAiTiA3NMKwMDAnMjAuMCJX!5e0!3m2!1sen!2sus!4v1617663611111"
+          width="100%"
+          height="350"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+        ></iframe>
+      </motion.div>
+
+      {/* Footer Tagline */}
+      <div className="relative max-w-6xl mx-auto text-center mt-12 text-gray-400 text-sm">
+        💬 We’re here for you — <span className="text-red-500">24/7 Support</span>
       </div>
     </main>
   );
