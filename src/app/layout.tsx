@@ -1,10 +1,9 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { CartProvider } from "./context/CardContext";
-import Navbar from "./components/Navbar";   // ✅ Navbar import
-import Footer from "./components/Footer";   // ✅ Footer import
+import Navbar from "@/app/components/Navbar";   // ✅ Navbar import
+import Footer from "@/app/components/Footer";   // ✅ Footer import
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,11 +29,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-black`}
+      >
         <CartProvider>
-          <Navbar />   {/* ✅ Navbar show hoga har page par */}
-          {children}
-          <Footer />   {/* ✅ Footer show hoga har page par */}
+          <Navbar />   {/* ✅ Har page pe show hoga */}
+          <main className="min-h-screen">{children}</main>
+          <Footer />   {/* ✅ Har page pe show hoga */}
         </CartProvider>
       </body>
     </html>
