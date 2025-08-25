@@ -5,25 +5,19 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-// ✅ Product Data with category + slug
-const categories = [
-  { name: "BDSM", slug: "bdsm" },
-  { name: "Bondage", slug: "bondage" },
-  { name: "Sex Toys", slug: "sex-toys" },
-  { name: "Electro", slug: "electro" },
-];
+// ✅ Import your real products from your data files
+import { bdsmProducts } from "@/data/bdsm";
+import { bondageProducts } from "@/data/bondage";
+import { sexToysProducts } from "@/data/sex-toys";
+import { electroProducts } from "@/data/electro";
 
-const allProducts = Array.from({ length: 20 }, (_, i) => {
-  const cat = categories[i % categories.length];
-  return {
-    id: i + 1,
-    name: `Product ${i + 1}`,
-    price: (Math.random() * 100 + 10).toFixed(2),
-    category: cat.name,
-    slug: cat.slug,
-    img: "/images/placeholder.png", // 👈 Replace with real product image
-  };
-});
+// ✅ Combine all products into one array
+const allProducts = [
+  ...bdsmProducts,
+  ...bondageProducts,
+  ...sexToysProducts,
+  ...electroProducts,
+];
 
 export default function CollectionPage() {
   const { slug } = useParams();
