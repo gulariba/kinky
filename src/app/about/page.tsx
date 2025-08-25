@@ -1,6 +1,4 @@
 // app/about/page.tsx
-"use client";
-
 import Image from "next/image";
 import type { Metadata } from "next";
 
@@ -14,12 +12,9 @@ export default function AboutPage() {
   return (
     <main className="bg-gradient-to-b from-black via-zinc-900 to-black text-white px-6 md:px-12 py-16 min-h-screen">
       <div className="max-w-6xl mx-auto">
-        {/* Heading */}
         <h1 className="text-4xl md:text-5xl font-extrabold mb-12 text-red-500 text-center md:text-left">
           About Us
         </h1>
-
-        {/* Intro Paragraph */}
         <p className="text-lg md:text-xl mb-12 leading-relaxed text-gray-300 text-center md:text-left">
           At <span className="text-red-400 font-semibold">NOIR DESIRE</span>, we craft
           unforgettable experiences through our curated selection of premium
@@ -27,7 +22,6 @@ export default function AboutPage() {
           every piece we offer.
         </p>
 
-        {/* Story Section */}
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl font-semibold mb-6 text-red-400">Our Story</h2>
@@ -42,8 +36,6 @@ export default function AboutPage() {
               unique desires of our customers. We are more than a brand — we are
               a lifestyle.
             </p>
-
-            {/* Vision Highlight */}
             <div className="bg-red-600/10 border border-red-600 p-6 rounded-xl shadow-md">
               <h3 className="text-xl font-semibold mb-2 text-red-500">Our Vision</h3>
               <p className="text-gray-300 text-sm">
@@ -53,7 +45,6 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Image */}
           <div className="flex justify-center md:justify-end">
             <Image
               src="/images/bg.jpg"
@@ -66,7 +57,6 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Values Section */}
         <section className="mt-20 text-center md:text-left">
           <h2 className="text-3xl font-semibold mb-8 text-red-400">Our Values</h2>
           <div className="grid md:grid-cols-3 gap-8">
