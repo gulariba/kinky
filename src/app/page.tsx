@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Navbar from "./components/Navbar";
 import { Instagram, Twitter, Facebook, Mail, Phone, Youtube } from "lucide-react";
 
 // ✅ Dummy Data
@@ -37,9 +36,7 @@ const testimonials = [
 export default function HomePage() {
   return (
     <main className="bg-black text-white min-h-screen font-sans">
-      {/* ✅ Navbar */}
-      <Navbar />
-
+     
       {/* ✅ Hero Section */}
       <section className="relative h-[70vh] md:h-[90vh] flex items-center justify-center">
         <Image src="/images/bg.jpg" alt="Hero Banner" fill priority className="object-cover object-center" />
