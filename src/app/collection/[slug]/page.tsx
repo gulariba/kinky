@@ -5,11 +5,12 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-// ✅ Import your real products from your data files
-import { bdsmProducts } from "@/data/bdsm";
-import { bondageProducts } from "@/data/bondage";
-import { sexToysProducts } from "@/data/sex-toys";
-import { electroProducts } from "@/data/electro";
+// Replace all @/data imports with relative paths
+import { bdsmProducts } from "../../../data/bdsm";
+import { bondageProducts } from "../../../data/bondage";
+import { sexToysProducts } from "../../../data/sex-toys";
+import { electroProducts } from "../../../data/electro";
+
 
 // ✅ Combine all products into one array
 const allProducts = [
@@ -119,3 +120,4 @@ export default function CollectionPage() {
     </main>
   );
 }
+
