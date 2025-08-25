@@ -1,25 +1,26 @@
 export const electroProducts = [
   {
     id: 1,
-    name: "Electro Stimulation Kit",
-    price: "200.00",
+    name: "Electro Stimulation Wand",
+    price: "150.00",
+    category: "Electro",
     slug: "electro",
     img: "/images/electro1.jpg",
   },
   {
     id: 2,
-    name: "TENS Unit Electro Toy",
-    price: "180.00",
+    name: "E-Stim Pads",
+    price: "80.00",
+    category: "Electro",
     slug: "electro",
     img: "/images/electro2.jpg",
   },
   {
     id: 3,
-    name: "Electro Paddle",
-    price: "95.00",
+    name: "Electro Nipple Clips",
+    price: "60.00",
+    category: "Electro",
     slug: "electro",
     img: "/images/electro3.jpg",
   },
 ];
-
-
