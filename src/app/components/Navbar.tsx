@@ -53,7 +53,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
 
   const activeClass = useMemo(
     () =>
-      "relative after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:scale-x-0 after:bg-red-500 after:transition-transform hover:after:scale-x-100",
+      "relative text-zinc-200 hover:text-white after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:scale-x-0 after:bg-red-500 after:transition-transform hover:after:scale-x-100",
     []
   );
 
@@ -65,7 +65,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-black/80 backdrop-blur supports-[backdrop-filter]:bg-black/60">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-black/90 backdrop-blur-md text-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:py-4">
         {/* Left: Logo + Mobile menu toggle */}
         <div className="flex items-center gap-3">
@@ -81,7 +81,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
             <Image
               src="/images/logo.png"
               alt="Noir Desire Logo"
-              width={72} // larger logo
+              width={72}
               height={72}
               className="h-16 w-16 md:h-20 md:w-20"
             />
@@ -175,7 +175,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
             onSubmit={submitSearch}
             className="hidden min-w-[220px] flex-1 items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950 px-3 py-2 md:flex"
           >
-            <Search className="h-4 w-4 shrink-0" />
+            <Search className="h-4 w-4 shrink-0 text-zinc-400" />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -184,10 +184,10 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
             />
           </form>
 
-          <Link href="/account" className="rounded-xl p-2 hover:bg-zinc-900" aria-label="Account">
+          <Link href="/account" className="rounded-xl p-2 text-zinc-200 hover:text-white hover:bg-zinc-900" aria-label="Account">
             <User className="h-5 w-5" />
           </Link>
-          <Link href="/wishlist" className="relative rounded-xl p-2 hover:bg-zinc-900" aria-label="Wishlist">
+          <Link href="/wishlist" className="relative rounded-xl p-2 text-zinc-200 hover:text-white hover:bg-zinc-900" aria-label="Wishlist">
             <Heart className="h-5 w-5" />
             {wishlistCount > 0 && (
               <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold">
@@ -195,7 +195,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
               </span>
             )}
           </Link>
-          <Link href="/cart" className="relative rounded-xl p-2 hover:bg-zinc-900" aria-label="Cart">
+          <Link href="/cart" className="relative rounded-xl p-2 text-zinc-200 hover:text-white hover:bg-zinc-900" aria-label="Cart">
             <ShoppingCart className="h-5 w-5" />
             {cartCount > 0 && (
               <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-semibold">
@@ -217,7 +217,7 @@ export default function Navbar({ cartCount = 0, wishlistCount = 0 }: NavbarProps
           >
             {/* Mobile search */}
             <form onSubmit={submitSearch} className="mx-4 mt-4 flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2">
-              <Search className="h-5 w-5" />
+              <Search className="h-5 w-5 text-zinc-400" />
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
