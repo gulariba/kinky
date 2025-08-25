@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { useParams } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 
-// ✅ Import products from data folder
 import { bdsmProducts } from "@/app/data/bdsm";
 import { bondageProducts } from "@/app/data/bondage";
 import { sexToysProducts } from "@/app/data/sex-toys";
@@ -18,9 +17,8 @@ export default function CollectionPage() {
 
   const [sort, setSort] = useState("latest");
   const [page, setPage] = useState(1);
-  const itemsPerPage = 8;
 
-  // ✅ Combine all products
+  // Combine all products
   const allProducts = [
     ...bdsmProducts,
     ...bondageProducts,
@@ -28,7 +26,7 @@ export default function CollectionPage() {
     ...electroProducts,
   ];
 
-  // ✅ Filter by category slug
+  // Filter by category slug
   const filteredProducts = allProducts
     .filter((p) => p.slug === categorySlug)
     .sort((a, b) =>
@@ -39,8 +37,8 @@ export default function CollectionPage() {
         : b.id - a.id
     );
 
-  // ✅ Pagination
-  const paginatedProducts = filteredProducts.slice(
+  const itemsPerPage = 8;
+  const paginated = filteredProducts.slice(
     (page - 1) * itemsPerPage,
     page * itemsPerPage
   );
@@ -54,14 +52,9 @@ export default function CollectionPage() {
           <h1 className="text-4xl font-bold capitalize">
             {slugStr.replace(/-/g, " ")} Collection
           </h1>
-
-          {/* Sorting */}
           <select
             value={sort}
-            onChange={(e) => {
-              setSort(e.target.value);
-              setPage(1); // reset page on sorting change
-            }}
+            onChange={(e) => setSort(e.target.value)}
             className="bg-gray-900 border border-gray-700 px-4 py-2 rounded mt-4 md:mt-0"
           >
             <option value="latest">Latest</option>
@@ -71,9 +64,9 @@ export default function CollectionPage() {
         </div>
 
         {/* Product Grid */}
-        {paginatedProducts.length > 0 ? (
+        {paginated.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {paginatedProducts.map((product) => (
+            {paginated.map((product) => (
               <Link
                 href={`/products/${product.id}`}
                 key={product.id}
