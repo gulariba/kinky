@@ -1,45 +1,46 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { useState } from "react";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
-// ✅ Relative imports of product data
-import bdsmProducts from "../../../data/bdsm";
-import bondageProducts from "../../../data/bondage";
-import sexToysProducts from "../../../data/sex-toys";
-import electroProducts from "../../../data/electro";
-
-// ✅ Combine all products into one array
-const allProducts = [
-  ...bdsmProducts,
-  ...bondageProducts,
-  ...sexToysProducts,
-  ...electroProducts,
-];
+// ✅ Import products from data folder
+import { bdsmProducts } from "@/app/data/bdsm";
+import { bondageProducts } from "@/app/data/bondage";
+import { sexToysProducts } from "@/app/data/sex-toys";
+import { electroProducts } from "@/app/data/electro";
 
 export default function CollectionPage() {
   const { slug } = useParams();
-  const [sort, setSort] = useState("latest");
-  const [page, setPage] = useState(1);
-
   const slugStr = slug ? String(slug) : "";
   const categorySlug = slugStr.toLowerCase().trim();
 
-  // ✅ Filter products by category slug
+  const [sort, setSort] = useState("latest");
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 8;
+
+  // ✅ Combine all products
+  const allProducts = [
+    ...bdsmProducts,
+    ...bondageProducts,
+    ...sexToysProducts,
+    ...electroProducts,
+  ];
+
+  // ✅ Filter by category slug
   const filteredProducts = allProducts
-    .filter((p) => p.category === categorySlug)
+    .filter((p) => p.slug === categorySlug)
     .sort((a, b) =>
       sort === "priceLowHigh"
-        ? a.price - b.price
+        ? parseFloat(a.price) - parseFloat(b.price)
         : sort === "priceHighLow"
-        ? b.price - a.price
+        ? parseFloat(b.price) - parseFloat(a.price)
         : b.id - a.id
     );
 
-  const itemsPerPage = 8;
-  const paginated = filteredProducts.slice(
+  // ✅ Pagination
+  const paginatedProducts = filteredProducts.slice(
     (page - 1) * itemsPerPage,
     page * itemsPerPage
   );
@@ -57,7 +58,10 @@ export default function CollectionPage() {
           {/* Sorting */}
           <select
             value={sort}
-            onChange={(e) => setSort(e.target.value)}
+            onChange={(e) => {
+              setSort(e.target.value);
+              setPage(1); // reset page on sorting change
+            }}
             className="bg-gray-900 border border-gray-700 px-4 py-2 rounded mt-4 md:mt-0"
           >
             <option value="latest">Latest</option>
@@ -67,9 +71,9 @@ export default function CollectionPage() {
         </div>
 
         {/* Product Grid */}
-        {paginated.length > 0 ? (
+        {paginatedProducts.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {paginated.map((product) => (
+            {paginatedProducts.map((product) => (
               <Link
                 href={`/products/${product.id}`}
                 key={product.id}
@@ -77,7 +81,7 @@ export default function CollectionPage() {
               >
                 <Image
                   src={product.img}
-                  alt={product.name || "Product Image"}
+                  alt={product.name}
                   width={500}
                   height={192}
                   className="w-full object-cover group-hover:scale-105 transition-transform duration-300"
