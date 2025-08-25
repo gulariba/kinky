@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Hero from "./components/hero";
+import Hero from "./components/Hero";
 import { Instagram, Twitter, Facebook, Mail, Phone, Youtube } from "lucide-react";
 
 // ✅ Dummy Data
